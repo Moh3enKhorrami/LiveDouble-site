@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>LiveDeuble — Privacy Policy</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#f0ede5;--surface:#fbf9f4;--line:#dad5c7;--text:#0a2b29;--muted:#506b67;--accent:#004643}
+@media (prefers-color-scheme:dark){:root{--bg:#02201e;--surface:#072f2c;--line:#14504b;--text:#f0ede5;--muted:#9bbab4;--accent:#d9a441}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em;text-decoration:none;color:inherit;margin-bottom:36px}
+.brand img{width:34px;height:34px}
+h1{margin:0 0 6px;font-size:40px;line-height:1.1;letter-spacing:-.03em}
+.date{margin:0 0 32px;color:var(--muted);font-size:15px}
+h2{margin:36px 0 8px;font-size:22px;letter-spacing:-.015em}
+p,li{margin:0 0 12px}
+ul{padding-left:22px;margin:0 0 12px}
+a{color:var(--accent)}
+.box{padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+<main>
+<a class="brand" href="index.html"><img src="icon.png" alt="" width="34" height="34">LiveDeuble</a>
+<h1>Privacy Policy</h1>
+<p class="date">Last updated: 7 November 2026</p>
+
+<div class="box"><p><strong>In short:</strong> LiveDeuble has no server and no account. The audio of a tab goes straight from your browser to Google's Gemini API, using your own API key, only while you are dubbing. We do not receive, store or sell your audio, your key or your browsing activity.</p></div>
+
+<h2>Who we are</h2>
+<p>LiveDeuble is a Chrome extension made by Mohsen Khorrami, an independent developer. Contact: <a href="mailto:khorrami.dev@gmail.com">khorrami.dev@gmail.com</a>. LiveDeuble is not affiliated with or endorsed by Google.</p>
+
+<h2>What the extension does with your data</h2>
+<ul>
+<li><strong>Tab audio.</strong> When you press Start (or use the keyboard shortcut), the extension captures the audio of that one tab and sends it over a secure connection directly from your browser to Google's Gemini API to be translated. The translated speech and the transcripts come back to your browser and are played and shown to you. This audio never passes through any server run by us.</li>
+<li><strong>Your Gemini API key.</strong> You provide your own key. By default it is kept only for the current browser session and is forgotten when the browser closes. If you tick "Remember on this device", it is stored in the extension's local storage on your computer. The key is sent only to Google (generativelanguage.googleapis.com) to check it and to open the translation session. It is never sent to us.</li>
+<li><strong>Your settings.</strong> Language, volume, subtitle style and theme are stored locally in your browser.</li>
+<li><strong>Exports.</strong> The dubbed audio and the subtitles of the last session are kept in the extension's memory only so that you can save them. They are written to your disk only when you press an export button, and are replaced when you start a new session.</li>
+<li><strong>Subtitles on pages.</strong> When you start dubbing, the extension adds a small script to that one tab, only to draw subtitles over the video. It shows text received from the translation. It does not read, collect or transmit the content of the page, and it is not added to any other tab.</li>
+</ul>
+
+<h2>What we do not collect</h2>
+<p>We do not collect your name, email address, location, browsing history, the addresses of the pages you visit, or analytics about how you use the extension. We do not use cookies, advertising or tracking.</p>
+
+<h2>Google's processing</h2>
+<p>Audio you send to the Gemini API is processed by Google under your own agreement with Google and under <a href="https://policies.google.com/privacy" rel="noopener">Google's Privacy Policy</a> and the Gemini API terms. Google bills usage to your own key. Please read Google's terms to learn how they handle API data.</p>
+
+<h2>Sharing</h2>
+<p>We do not sell or transfer user data to third parties, except for sending the audio to Google's Gemini API, which is required for the extension's single purpose: dubbing a tab in real time. We do not use or transfer user data for purposes unrelated to that purpose, or to determine creditworthiness or for lending.</p>
+
+<h2>Your choices</h2>
+<ul>
+<li>Stop dubbing at any time with the Stop button or the shortcut. Capture ends immediately.</li>
+<li>Remove the stored key by unticking "Remember on this device" and verifying a key again, or by uninstalling the extension. Uninstalling also removes all settings.</li>
+<li>Revoke or delete your key in Google AI Studio at any time.</li>
+</ul>
+
+<h2>Children</h2>
+<p>LiveDeuble is not directed at children under 13 and we do not knowingly collect data from them.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the new version will be published on this page with a new date.</p>
+
+<h2>Contact</h2>
+<p>Questions about privacy: <a href="mailto:khorrami.dev@gmail.com">khorrami.dev@gmail.com</a>.</p>
+</main>
+</body>
+</html>

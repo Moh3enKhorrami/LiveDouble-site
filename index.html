@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>LiveDeuble — دوبله‌ی زنده‌ی هر تب</title>
+<meta name="description" content="LiveDeuble صدای تب کروم را همان لحظه به فارسی (و ۱۱ زبان دیگر) دوبله می‌کند و زیرنویس روی ویدیو نشان می‌دهد.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#f0ede5;--surface:#fbf9f4;--surface-2:#eae5d8;--line:#dad5c7;--text:#0a2b29;--muted:#506b67;--accent:#004643;--on-accent:#f0ede5;--up:#004643;--down:#b7791f;--frame:#062a28;--glow:0 30px 80px rgba(0,70,67,.18);--focus:#004643}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#02201e;--surface:#072f2c;--surface-2:#0c3d39;--line:#14504b;--text:#f0ede5;--muted:#9bbab4;--accent:#d9a441;--on-accent:#0a2321;--up:#f0ede5;--down:#d9a441;--frame:#011412;--glow:0 30px 90px rgba(0,110,104,.35);--focus:#d9a441}}
+:root[data-theme=dark]{--bg:#02201e;--surface:#072f2c;--surface-2:#0c3d39;--line:#14504b;--text:#f0ede5;--muted:#9bbab4;--accent:#d9a441;--on-accent:#0a2321;--up:#f0ede5;--down:#d9a441;--frame:#011412;--glow:0 30px 90px rgba(0,110,104,.35);--focus:#d9a441}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.75 "Vazirmatn","IRANSansX","SF Arabic","Geeza Pro",-apple-system,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:lang(en) body,body:lang(en){line-height:1.6}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+/* top bar */
+.bar{display:flex;align-items:center;gap:14px;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em;text-decoration:none;direction:ltr}
+.brand img{width:34px;height:34px}
+.bar nav{margin-inline-start:auto;display:flex;gap:8px;align-items:center}
+.pill{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.pill:hover{border-color:var(--muted)}
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;padding:48px 0 72px}
+h1{margin:0 0 18px;font-size:clamp(38px,5.4vw,64px);line-height:1.18;font-weight:800;letter-spacing:-.02em}
+:lang(en) h1{line-height:1.05;letter-spacing:-.035em}
+.lead{margin:0 0 28px;color:var(--muted);font-size:19px;max-width:30em}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.cta{min-height:52px;padding:0 26px;border-radius:16px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:17px;text-decoration:none;display:inline-flex;align-items:center}
+.cta:hover{filter:brightness(1.07)}
+.quiet{color:var(--muted);font-size:14px}
+/* demo: the memorable thing */
+.demo{border-radius:26px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--glow);padding:14px}
+.frame{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:radial-gradient(120% 90% at 20% 10%,#0f6b66 0,transparent 55%),radial-gradient(90% 90% at 90% 90%,#8a6a1a 0,transparent 55%),var(--frame)}
+.frame .tag{position:absolute;inset-inline-start:14px;top:12px;font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:2px 10px;border-radius:999px;direction:ltr}
+.cap{position:absolute;inset-inline:6%;bottom:9%;text-align:center;transition:opacity .35s}
+.cap.out{opacity:0}
+.cap .fa{display:inline-block;padding:.25em .7em;border-radius:.4em;background:rgba(0,0,0,.78);color:#fff;font-size:clamp(15px,2.2vw,22px);line-height:1.5}
+.cap .en{display:block;margin-top:6px;color:rgba(255,255,255,.7);font-size:clamp(11px,1.3vw,14px);direction:ltr}
+.meter{display:grid;grid-template-rows:1fr 1fr;gap:5px;height:84px;padding:14px 10px 4px}
+.lane{display:flex;justify-content:space-between;direction:ltr}
+.lane.up{align-items:flex-end}.lane.down{align-items:flex-start}
+.lane i{display:block;width:5.6%;border-radius:5px;transform-origin:center;animation:breathe 1.3s ease-in-out infinite}
+.lane.up i{background:var(--up)}.lane.down i{background:var(--down)}
+.lane i:nth-child(2n){animation-delay:-.4s}.lane i:nth-child(3n){animation-delay:-.8s}.lane i:nth-child(5n){animation-delay:-1.1s}
+@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
+.legend{display:flex;gap:18px;padding:6px 12px 6px;font-size:13px;color:var(--muted)}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px}
+@media (prefers-reduced-motion:reduce){.lane i{animation:none}.cap{transition:none}}
+/* sections */
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{margin:0 0 10px;font-size:clamp(26px,3.4vw,38px);line-height:1.25;font-weight:800;letter-spacing:-.015em}
+.sub{margin:0 0 36px;color:var(--muted);max-width:36em}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.steps li{padding:0 28px;border-inline-start:2px solid var(--line);counter-increment:s}
+.steps li:first-child{padding-inline-start:0;border:0}
+.steps li::before{content:counter(s,persian);display:block;font-size:44px;font-weight:800;color:var(--accent);line-height:1.1;margin-bottom:8px}
+:lang(en) .steps li::before{content:counter(s)}
+.steps{counter-reset:s}
+.steps h3{margin:0 0 6px;font-size:19px}
+.steps p{margin:0;color:var(--muted);font-size:15.5px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.feat div{padding:20px 0;border-bottom:1px solid var(--line)}
+.feat dt{font-weight:700;margin-bottom:2px}
+.feat dd{margin:0;color:var(--muted);font-size:15.5px}
+.trust{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
+.trust ul{margin:0;padding:0;list-style:none;display:grid;gap:14px}
+.trust li{padding-inline-start:22px;position:relative;color:var(--muted)}
+.trust li::before{content:"";position:absolute;inset-inline-start:0;top:.7em;width:9px;height:9px;border-radius:3px;background:var(--accent)}
+.trust li b{color:var(--text)}
+.note{margin-top:22px;padding:14px 16px;border-radius:12px;background:var(--surface-2);color:var(--muted);font-size:15px}
+.install ol{margin:0;padding-inline-start:22px;display:grid;gap:8px;max-width:40em;color:var(--muted)}
+.install code{direction:ltr;unicode-bidi:isolate;background:var(--surface-2);padding:1px 8px;border-radius:6px;font-size:.88em;color:var(--text)}
+footer{padding:36px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:860px){
+ .hero,.trust{grid-template-columns:1fr;gap:36px}.hero{padding-top:20px}
+ .steps{grid-template-columns:1fr;gap:22px}.steps li{padding:0;border:0}
+ .feat{grid-template-columns:1fr}
+ body{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="#top"><img src="icon.png" alt="" width="34" height="34">LiveDeuble</a>
+    <nav>
+      <button class="pill" id="lang" type="button" aria-label="Switch language">English</button>
+      <button class="pill" id="theme" type="button" aria-label="Theme">◐ <span id="themeLabel">خودکار</span></button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <h1 data-i="h1">هر ویدیویی را به فارسی بشنو.</h1>
+        <p class="lead" data-i="lead">LiveDeuble صدای تب کروم را همان لحظه به فارسی دوبله می‌کند و ترجمه را روی ویدیو می‌نویسد. بدون دانلود، بدون صبر کردن.</p>
+        <div class="cta-row">
+          <a class="cta" href="#install" data-i="cta">نصب نسخه‌ی آزمایشی</a>
+          <span class="quiet" data-i="free">رایگان. هزینه‌ی مدل را گوگل از کلید خودت حساب می‌کند.</span>
+        </div>
+      </div>
+
+      <div class="demo" aria-label="Demo">
+        <div class="frame">
+          <span class="tag">LIVE · English → فارسی</span>
+          <div class="cap" id="cap"><span class="fa" id="capFa">جلسه تا پنج دقیقه‌ی دیگر شروع می‌شود.</span><span class="en" id="capEn">The meeting starts in five minutes.</span></div>
+        </div>
+        <div class="meter" aria-hidden="true">
+          <div class="lane up"><i style="height:30%"></i><i style="height:52%"></i><i style="height:78%"></i><i style="height:44%"></i><i style="height:100%"></i><i style="height:62%"></i><i style="height:36%"></i><i style="height:70%"></i><i style="height:48%"></i><i style="height:26%"></i><i style="height:56%"></i><i style="height:34%"></i></div>
+          <div class="lane down"><i style="height:24%"></i><i style="height:30%"></i><i style="height:52%"></i><i style="height:78%"></i><i style="height:44%"></i><i style="height:100%"></i><i style="height:62%"></i><i style="height:36%"></i><i style="height:70%"></i><i style="height:48%"></i><i style="height:26%"></i><i style="height:56%"></i></div>
+        </div>
+        <div class="legend"><span><b style="background:var(--up)"></b><span data-i="lgOrig">صدای اصلی</span></span><span><b style="background:var(--down)"></b><span data-i="lgDub">دوبله‌ی فارسی، چند ثانیه عقب‌تر</span></span></div>
+      </div>
+    </div>
+
+    <section>
+      <h2 data-i="stepsT">سه قدم تا اولین دوبله</h2>
+      <p class="sub" data-i="stepsS">فقط یک بار کلید را می‌گذاری. بعد از آن، هر تب با یک کلیک.</p>
+      <ol class="steps">
+        <li><h3 data-i="s1t">کلید جمنای را بگیر</h3><p data-i="s1p">از Google AI Studio یک کلید رایگان بساز و در افزونه بچسبان. افزونه کلید را با خود گوگل آزمایش می‌کند.</p></li>
+        <li><h3 data-i="s2t">تب ویدیو را باز کن</h3><p data-i="s2p">هر تبی که صدا دارد: یوتیوب، کنفرانس، پادکست، خبر.</p></li>
+        <li><h3 data-i="s3t">شروع را بزن</h3><p data-i="s3p">دوبله‌ی فارسی پخش می‌شود و صدای اصلی زیرش آرام می‌شود تا گوینده روشن شنیده شود.</p></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 data-i="featT">چیزهایی که روزمره لازم داری</h2>
+      <dl class="feat">
+        <div><dt data-i="f1t">دوبله‌ی زنده به ۱۲ زبان</dt><dd data-i="f1d">فارسی، انگلیسی، عربی، ترکی، آلمانی و بیشتر. زبان گوینده خودکار تشخیص داده می‌شود.</dd></div>
+        <div><dt data-i="f2t">زیرنویس روی ویدیو</dt><dd data-i="f2d">فقط ترجمه یا دو زبانه. بالا یا پایین، سه اندازه، سه سبک، حتی در حالت تمام‌صفحه.</dd></div>
+        <div><dt data-i="f3t">صدا دست خودت است</dt><dd data-i="f3d">میزان دوبله و صدای اصلی جدا. دوبله را خاموش کن و فقط زیرنویس بخوان.</dd></div>
+        <div><dt data-i="f4t">ذخیره‌ی خروجی</dt><dd data-i="f4d">صدای دوبله (WAV) و زیرنویس (SRT) آخرین جلسه را دانلود کن.</dd></div>
+        <div><dt data-i="f5t">میان‌بر صفحه‌کلید</dt><dd data-i="f5d">با Alt+Shift+D بدون باز کردن پنجره شروع و متوقف کن.</dd></div>
+        <div><dt data-i="f6t">تیره و روشن</dt><dd data-i="f6d">پنجره‌ی افزونه خودکار با سیستم هماهنگ می‌شود یا خودت انتخاب می‌کنی.</dd></div>
+      </dl>
+    </section>
+
+    <section>
+      <div class="trust">
+        <div>
+          <h2 data-i="trT">صدای تو از مرورگرت بیرون نمی‌رود، مگر به گوگل.</h2>
+          <p class="sub" data-i="trS">LiveDeuble سرور ندارد. افزونه مستقیم به جمنای وصل می‌شود.</p>
+        </div>
+        <div>
+          <ul>
+            <li data-i="t1"><b>کلید فقط در مرورگر خودت می‌ماند.</b> پیش‌فرض: تا بستن مرورگر. اگر بخواهی، روی همین دستگاه یادش می‌ماند.</li>
+            <li data-i="t2"><b>هزینه را گوگل حساب می‌کند،</b> از کلید خودت و بر اساس مصرف. ما چیزی دریافت نمی‌کنیم.</li>
+            <li data-i="t3"><b>صدای تب ذخیره نمی‌شود،</b> مگر خودت خروجی بگیری.</li>
+          </ul>
+          <p class="note" data-i="beta">فناوری آزمایشی است: کیفیت ترجمه، تأخیر و ثبات صدا ممکن است گاهی فرق کند.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="install" id="install">
+      <h2 data-i="inT">نصب نسخه‌ی آزمایشی</h2>
+      <p class="sub" data-i="inS">هنوز در فروشگاه کروم نیست. فعلاً این‌طور نصب می‌شود:</p>
+      <ol>
+        <li data-i="i1">در پوشه‌ی پروژه <code>npm install</code> و بعد <code>npm run build</code> را اجرا کن.</li>
+        <li data-i="i2">در کروم <code>chrome://extensions</code> را باز کن و «حالت توسعه‌دهنده» را روشن کن.</li>
+        <li data-i="i3">«بارگذاری بدون بسته‌بندی» را بزن و پوشه‌ی <code>dist</code> را انتخاب کن.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer><span><span data-i="made">ساخته‌ی محسن خرمی</span> · <a href="mailto:khorrami.dev@gmail.com">khorrami.dev@gmail.com</a> · <a href="https://www.linkedin.com/in/mohsenkhorrami/" target="_blank" rel="noopener">LinkedIn</a> · <a href="privacy.html">Privacy</a></span><span data-i="foot">ساخته‌شده با جمنای لایو. بدون سرور، بدون حساب کاربری.</span></footer>
+</div>
+
+<script>
+const EN={h1:'Hear any video in Persian.',lead:'LiveDeuble dubs your Chrome tab into Persian the moment it plays, and writes the translation on the video. No downloads, no waiting.',cta:'Install the preview',free:'Free. Google bills the model to your own key.',lgOrig:'Original voice',lgDub:'Persian dub, a few seconds behind',stepsT:'Three steps to your first dub',stepsS:'You paste the key once. After that, any tab is one click.',s1t:'Get a Gemini key',s1p:'Create a free key in Google AI Studio and paste it into the extension. It checks the key with Google for you.',s2t:'Open the tab with the video',s2p:'Any tab with sound: YouTube, a conference, a podcast, the news.',s3t:'Press Start',s3p:'The Persian dub plays and the original fades underneath so the speaker stays clear.',featT:'What you need every day',f1t:'Live dubbing into 12 languages',f1d:'Persian, English, Arabic, Turkish, German and more. The spoken language is detected automatically.',f2t:'Subtitles on the video',f2d:'Translation only or dual. Top or bottom, three sizes, three styles, even in full screen.',f3t:'The sound is yours',f3d:'Separate volume for the dub and the original. Mute the dub and just read the subtitles.',f4t:'Save the result',f4d:'Download the dub audio (WAV) and the subtitles (SRT) of the last session.',f5t:'Keyboard shortcut',f5d:'Start and stop with Alt+Shift+D without opening the popup.',f6t:'Dark and light',f6d:'The popup follows your system, or you choose.',trT:'Your audio goes nowhere but Google.',trS:'LiveDeuble has no server. The extension connects straight to Gemini.',t1:'<b>The key stays in your browser.</b> By default until the browser closes. If you want, it is remembered on this device.',t2:'<b>Google bills the usage</b> to your own key, by what you use. We charge nothing.',t3:'<b>Tab audio is not stored</b> unless you export it yourself.',beta:'This is preview technology: translation quality, delay and voice continuity can vary.',inT:'Install the preview',inS:'It is not in the Chrome Web Store yet. For now:',i1:'In the project folder run <code>npm install</code>, then <code>npm run build</code>.',i2:'Open <code>chrome://extensions</code> in Chrome and turn on Developer mode.',i3:'Press “Load unpacked” and choose the <code>dist</code> folder.',foot:'Built on Gemini Live. No server, no account.',made:'Built by Mohsen Khorrami'};
+const FA={};document.querySelectorAll('[data-i]').forEach(e=>FA[e.dataset.i]=e.innerHTML);
+const root=document.documentElement;
+const PHRASES=[['جلسه تا پنج دقیقه‌ی دیگر شروع می‌شود.','The meeting starts in five minutes.'],['نتیجه‌ی آزمایش از انتظار ما بهتر بود.','The test result was better than we expected.'],['برای ادامه، دکمه‌ی شروع را فشار دهید.','To continue, press the start button.']];
+let lang=localStorage.getItem('ld-lang')||'fa',theme=localStorage.getItem('ld-theme')||'auto';
+function applyLang(){root.lang=lang;root.dir=lang==='fa'?'rtl':'ltr';document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=(lang==='fa'?FA:EN)[e.dataset.i]);document.getElementById('lang').textContent=lang==='fa'?'English':'فارسی';applyTheme();document.title=lang==='fa'?'LiveDeuble — دوبله‌ی زنده‌ی هر تب':'LiveDeuble — live dubbing for any tab'}
+const T={auto:['خودکار','Auto'],light:['روشن','Light'],dark:['تیره','Dark']};
+function applyTheme(){theme==='auto'?root.removeAttribute('data-theme'):root.dataset.theme=theme;document.getElementById('themeLabel').textContent=T[theme][lang==='fa'?0:1]}
+document.getElementById('lang').onclick=()=>{lang=lang==='fa'?'en':'fa';localStorage.setItem('ld-lang',lang);applyLang()};
+document.getElementById('theme').onclick=()=>{theme={auto:'light',light:'dark',dark:'auto'}[theme];localStorage.setItem('ld-theme',theme);applyTheme()};
+applyLang();
+let n=0;const cap=document.getElementById('cap');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{cap.classList.add('out');setTimeout(()=>{n=(n+1)%PHRASES.length;capFa.textContent=PHRASES[n][0];capEn.textContent=PHRASES[n][1];cap.classList.remove('out')},380)},4200);
+</script>
+</body>
+</html>
